@@ -1,0 +1,467 @@
+package Tutorial.week4;
+
+import java.util.*;
+/**
+ * @overview: write method count negative number
+ * 
+ * @author (Mr. Silver) 
+ * @version (1.0)
+ */
+public class Arrays
+{
+    
+    public static int[] inputint()
+    {
+        
+        Scanner s = new Scanner(System.in);
+        System.out.print("Input array length: ");
+        int num = s.nextInt();
+        int[] array = new int[num];
+        for(int i = 0 ; i <  num ; i ++)
+        {
+            System.out.print("Input the number "+(i+1)+": ");
+            array[i] = s.nextInt();
+        }
+        return array;
+    }
+     public static float[] inputfloat()
+    {
+        Scanner s = new Scanner(System.in);
+        System.out.print("Input array length: ");
+        int num = s.nextInt();
+        float[] array = new float[num];
+        for(int i = 0 ; i <  num ; i ++)
+        {
+            System.out.print("Input the number "+(i+1)+": ");
+            array[i] = s.nextFloat();
+        }
+        return array;
+    }
+     public static char[] inputChar()
+    {
+        Scanner s = new Scanner(System.in);
+        System.out.print("Input array length: ");
+        int num = s.nextInt();
+        char[] array = new char[num];
+        for(int i = 0 ; i <  num ; i ++)
+        {
+            System.out.print("Input the character "+(i+1)+": ");
+            array[i] = s.next().charAt(0);
+        }
+        return array;
+    }
+     public static long[] inputlong()
+    {
+        Scanner s = new Scanner(System.in);
+        System.out.print("Input array length: ");
+        int num = s.nextInt();
+        long[] array = new long[num];
+        for(int i = 0 ; i <  num ; i ++)
+        {
+            System.out.print("Input the number "+(i+1)+": ");
+            array[i] = s.nextLong();
+        }
+        return array;
+    }
+     public static void Menu()
+    {
+        int chose;
+        do{
+        System.out.println("1. Count negative numbers");
+        System.out.println("2. Find min");
+        System.out.println("3. Determine a sorted array");
+        System.out.println("4. Find length");
+        System.out.println("5. Median");
+        System.out.println("6. Compare 2 arrays");
+        System.out.println("7. Frequency");
+        System.out.println("8. Quit");
+        Scanner s=new Scanner(System.in);
+        System.out.println("Your chose: ");
+        chose=s.nextInt();
+        switch(chose)
+        {
+            case 1:
+            {
+                System.out.println("You chose 2");
+                int[] array = inputint();
+                System.out.println("The number of negative is: "+countNegative(array));
+            }
+            break;
+            case 2:
+            {
+                System.out.println("You chose 2");
+                int[] array = inputint();
+                System.out.println("The min number is: "+min(array));
+            }
+            break;
+            case 3:
+            {
+                System.out.println("You chose 3");
+                int[] array = inputint();
+                if(isAscSorted(array)==true)
+                System.out.println("Sorted Array!");
+                else
+                System.out.println("Unsorted Array!");
+            }
+            break;
+            case 4:
+            {
+                System.out.println("You chose 4");
+                char[] array = inputChar();
+                System.out.println("Length: "+length(array));
+            }
+            
+            break;
+            case 5:
+            {
+                System.out.println("You chose 5");
+                float[] array = inputfloat();
+                System.out.println("The median of the array is: "+median(array,0,array.length-1));
+            }
+            break;
+            case 6:
+            {
+                System.out.println("You chose 6");
+                long[] array1 = inputlong();
+                long[] array2 = inputlong();
+                System.out.println("The relation of 2 arrays is: ");
+                compare(array1,array2);
+            }
+            
+            break;
+            case 7:
+            {
+                System.out.println("You chose 7");
+                long[] array = inputlong();
+                freq(array);
+            }
+            case 8:System.out.println("BYE!");
+            break;
+            default: System.out.println("Wrong chose!");
+        }
+    }while(chose !=8);
+    }
+    /**
+     * counts the negative number in an array
+     * @requires an integer arrays
+     * @modifies 
+     * @effects
+     *  foreach element e of <tt>array</tt>
+     *      if e < 0
+     *          count++
+     *  returns count
+     *      
+     */
+    public static int countNegative(int[] array)
+    {
+        int count = 0;
+        for (int i = 0; i< array.length; i++)
+        {
+            if (array[i] <0)
+            {
+                count++;
+            }
+        }
+        return count;
+    }
+    /**
+     * find the min number of an array
+     * @requires
+     * @modifies 
+     * @effects
+     *  assign min to array[0]
+     *  for each element e of the array
+     *  if e < min
+     *      min = e
+     *  end loop for
+     *  return min    
+     */
+   public static int min(int[] array)
+   {
+       int min = array[0];
+       for(int i = 0 ; i < array.length; i ++)
+       {
+           if(array[i]<min)
+           min = array[i];
+        }
+        return min;
+    }
+    /**
+     * determine whether an array is in ascending order
+     * @requires
+     * @modifies 
+     * @effects
+     *  for each element e (from 0 to array.length -1)
+     *      if e[i] > e [i+1]
+     *      return false;
+     *  end loop for
+     *  return true;
+     */
+    public static boolean isAscSorted(int[] array)
+    {
+        for(int i = 0 ; i < array.length-1; i ++)
+        {
+            if(array[i]>array[i+1])
+            return false;
+        }
+        return true;
+    }
+    /**
+     * count the character until null
+     * @requires
+     * @modifies 
+     * @effects
+     * assign count to 0;
+     * assign NUL to '\u0000'
+     * while each element e of the array is different from NUL
+     *      count++
+     *      if count = array.length
+     *      break
+     * end loop
+     * return count;
+     */
+    public static int length(char[] array)
+    {
+        int count=0;
+        char NUL = '\u0000';
+       while(array[count]!=NUL)
+       {
+           count++;
+           if(count==array.length)
+           break;
+           
+        }
+           return count;
+    }
+     /**
+     * compare 2 real arrays
+     * @requires
+     * @modifies 
+     * @effects
+     *  assign ecommon to 0
+     *  for each element e1 of array real1
+     *      for each element e2 of array real2
+     *          if e1 = e2
+     *          ecommon++
+     *      end loop for
+     *   end loop for
+     *   if ecommon = real1.length and ecommon < real2.length
+     *      a belong to b
+     *   if ecommon = real2.length and ecommon < real1.length
+     *      b belong to a
+     *   if ecommon < real1.length and ecommon < real2.length
+     *      a meet b
+     *     if ecommon = real1.length and ecommon = real2.length
+     *      a = b 
+     */
+    public static void compare(long[] real1,long[] real2)
+    {
+        int ecommon=0;
+        for(int i = 0 ; i < real1.length; i ++)
+        {
+            for(int j = 0 ; j < real2.length; j++)
+                {
+                    if(real1[i]==real2[j])
+                    ecommon++;
+                }
+        }
+        if(ecommon == real1.length&&ecommon < real2.length)
+        System.out.println("A belong to B");
+        if(ecommon == real2.length&&ecommon < real1.length)
+        System.out.println("B belong to A");
+        if(ecommon < real1.length&&ecommon < real2.length)
+        System.out.println("A meet B");
+        if(ecommon == real1.length&&ecommon == real2.length)
+        System.out.println("A equals to B");
+    }
+     /**
+     * calculate the frequency of each element in the array
+     * @requires
+     * @modifies 
+     * @effects
+     * create a long value counttemp
+     * set the boolean check to true
+     * create number and countnum ArrayList
+     *      for each element i of array reals
+     *          set check value to true
+     *          for each element k of ArrayList number
+     *              if i = k
+     *                  set check to false
+     *              
+     *          end loop for
+     *          if check is true
+     *              assign counttemp to 0
+     *              for each element j of array reals
+     *                  if i = j
+     *                  counttemp++
+     *               end loop for
+     *           add i to ArrayList number
+     *           add counttemp to ArrayList countnum
+     *      end loop for     
+     *      print the original array and the result
+     */
+    public static void freq(long[] reals)
+    {
+        long counttemp;
+        boolean check=true;
+        ArrayList<Long> number= new ArrayList<Long>();
+        ArrayList<Long> countnum= new ArrayList<Long>();
+        for(int i = 0 ; i < reals.length; i ++)
+        {
+                    check=true;
+                     for(int k=0;k<number.size();k++)
+                            {
+                                 if(reals[i]==number.get(k))
+                                    {
+                                        check = false;
+                                       
+                                    }
+                            }
+                   if(check == true)
+                    {
+                        counttemp = 0;
+                            for(int j = 0 ; j < reals.length; j ++)
+                            {
+                                
+                                if(reals[i] == reals[j])
+                                {
+                                    counttemp++;  
+                                }
+                            }
+                            number.add(reals[i]);
+                            countnum.add(counttemp); 
+                    }
+                   
+        }
+       System.out.println("Your original array is: ");
+       for(int i = 0 ; i <reals.length;i++)
+       System.out.print(reals[i]+"  ");
+       System.out.println();
+       System.out.println("Result: ");
+       for(int i = 0; i<number.size() ; i++)
+       {
+           System.out.println("Number: "+number.get(i)+"   "+"Freq: "+countnum.get(i));
+        }        
+    }
+    /**
+     * find the median of the array
+     * @requires: 
+     * @modifies:
+     * @effects: 
+     *  assign len  to array.length
+     *  assign sum to 0
+     *  create float variables meleft,meright,median
+     *  create a float variable average
+     *      if len is odd
+     *          median = (len+1)/2
+     *          return array[median]
+     *      else
+     *          meleft = len/2-1;
+     *          meright = meleft+1;
+     *          for each element e of the array
+     *              sum+=e
+     *          end loop for
+     *          average = sum/len
+     *          if average - array[meleft] greater than array[meright]-average
+     *              median = meright
+     *              return array[median]
+     *          else
+     *              if average - array[meleft] equals to array[meright]-average
+     *                  print out there's no median          
+     *              else
+     *              median = meleft
+     *              return array[median]
+     *  return -1
+     *          
+     */
+    public static float median(float[] array,float left,float right)
+    {
+        array = Quick_Sort(array,left,right);
+        float len = array.length;
+        float meleft,meright,median;
+        float sum=0;
+        float average;
+        
+        if(len%2==1)
+            {
+                median = (len+1)/2;
+                return array[(int)median];
+            }
+       else
+            {
+                meleft = len/2-1;
+                meright = meleft+1;
+                for(int i = 0; i < array.length; i ++)
+                {
+                    sum+=array[i];
+                }
+                average = sum/len;
+               
+                if(average-array[(int)meleft]> array[(int)meright]-average)
+                    {
+                        median = meright;
+                        return array[(int)median];
+                    }
+                else
+                {
+                    if(average-array[(int)meleft] == array[(int)meright]-average)
+                        {
+                             System.out.println("There's no median!");
+                        }
+                    else
+                        {
+                               median = meleft;
+                               return array[(int)median];
+                        }
+                }       
+            }
+       return -1;
+    
+    }
+    /**
+     * part of quickshort
+     */
+    public static float partition(float[] data, float idLeftMost, float idRightMost)
+    {
+        float down,up,pivot,temp;
+        pivot = data[(int)idLeftMost];
+        up = idRightMost;
+        down = idLeftMost;
+        while(down<up)
+        {
+            while((data[(int)down]<=pivot)&&(down < idRightMost))
+                        down++;
+                        while(data[(int)up] > pivot)
+                        up--;
+                        
+                        if(down<up)
+                        {
+                            temp = data[(int)down];
+                            data[(int)down] = data[(int)up];
+                            data[(int)up] = temp;
+                        }
+        }
+        data[(int)idLeftMost] = data[(int)up];
+        data[(int)up] = pivot;
+        return up;
+    }
+    /**
+     * quickshort
+     */
+    public static float[] Quick_Sort(float[] data, float idLeftmost, float idRightmost)
+    {
+            float j;
+            if (idLeftmost < idRightmost)
+            {
+                j=partition(data, idLeftmost, idRightmost);    
+                Quick_Sort(data, idLeftmost, j-1); 
+                Quick_Sort(data, j+1, idRightmost); 
+               
+            }
+            return data;
+    }
+    public static void main()
+    {
+        Menu();
+    }
+}
