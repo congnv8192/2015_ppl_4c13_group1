@@ -1,0 +1,124 @@
+import java.util.Stack;
+/**
+ * Write a description of class infixConvert here.
+ * 
+ * @author (Mr. Silver) 
+ * @version (1.0)
+ */
+public class infixConvert
+{
+   public static String convert(String ori_string)
+   {
+       ori_string = ori_string+"#";
+       String result="";
+       Stack s = new Stack();
+       s.push('#');
+       for(int i = 0 ; i<ori_string.length();i++)
+       {
+           
+           if(ori_string.charAt(i)>='0'&&ori_string.charAt(i)<='9'||ori_string.charAt(i)=='.')
+           {
+               result = result + ori_string.charAt(i);
+               if(ori_string.charAt(i+1)=='+'
+               ||ori_string.charAt(i+1)=='*'
+               ||ori_string.charAt(i+1)=='-'
+               ||ori_string.charAt(i+1)=='/'
+               ||ori_string.charAt(i+1)==')'
+               ||ori_string.charAt(i+1)=='('
+               ||ori_string.charAt(i+1)=='#')
+                
+               result = result +" ";
+            }
+            else
+            {
+               
+                if((char) s.peek() == '*'||(char) s.peek() == '/')
+                {
+                    if(ori_string.charAt(i)=='+'||ori_string.charAt(i)=='-')
+                    {
+                        result = result + (char) s.pop()+" ";
+                        
+                    }
+                    
+                }
+                
+                s.push(ori_string.charAt(i));
+                if((char) s.peek() == ')')
+                {
+                    s.pop();
+                       while((char) s.peek() != '(')
+                    {
+                        
+                        if((char) s.peek()!=')')
+                        result = result + s.pop()+" ";
+                    } 
+                    s.pop();
+                }
+                
+            }  
+            if(i==ori_string.length()-2)
+            {
+                while((char) s.peek()!='#')
+                result = result + (char) s.pop()+" ";
+            }
+            
+    }
+    return result;
+}
+
+public static int eva_postfix(String ori_string)
+{
+    String[] parts = ori_string.split(" ");
+    int temp;
+    Stack<Integer> s = new Stack<Integer>();
+    
+    for(int i = 0; i<parts.length;i++)
+    {
+        if(parts[i].charAt(0)>='0'&&parts[i].charAt(0)<='9')
+        {
+            s.push(Integer.parseInt(parts[i]));
+        }
+        else
+        {
+            if(parts[i].equals("+"))
+            {
+               int first=s.pop();
+               int second = s.pop();
+               temp = first + second;
+                
+                s.push(temp);
+            }
+            if(parts[i].equals("-"))
+            {
+                int first=s.pop();
+               int second = s.pop();
+               temp = first - second;
+                
+                s.push(temp);
+            }
+            if(parts[i].equals("*"))
+            {
+                int first=s.pop();
+               int second = s.pop();
+               temp = first * second;
+                s.push(temp);
+            }
+            if(parts[i].equals("/"))
+            {
+               int first=s.pop();
+               int second = s.pop();
+               temp = first / second;
+                s.push(temp);
+            }
+        }
+    }
+    return s.get(0);
+}
+
+public static void main()
+{
+    String a = "((2*(3+4)+5)*6+7*8)*9";
+    String b = convert(a);
+    System.out.print(eva_postfix(b));
+}
+}
